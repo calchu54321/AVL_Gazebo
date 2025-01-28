@@ -192,10 +192,10 @@
                 </sensor>
                 <visual name='visual'>
                     <geometry>
-                        <mesh>
-                            <uri>file://new_car_chassis.stl</uri>
-                            <scale>0.58 0.58 0.58</scale>
-                        </mesh>
+			<mesh> 
+				<uri>new_car_chassis.stl</uri>     	
+                        <scale>0.58 0.58 0.58</scale>
+			</mesh>
                     </geometry>
                     <!--Color of the link-->
                     <material>

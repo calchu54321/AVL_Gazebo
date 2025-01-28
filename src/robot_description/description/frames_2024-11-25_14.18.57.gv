@@ -1,0 +1,14 @@
+digraph G {
+"base_link" -> "Front_Left_steering_link"[label=" Broadcaster: default_authority\nAverage rate: 10.196\nBuffer length: 5.1\nMost recent transform: 1732573137.489683\nOldest transform: 1732573132.38957\n"];
+"Front_Left_steering_link" -> "Front_Left_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 10.196\nBuffer length: 5.1\nMost recent transform: 1732573137.489683\nOldest transform: 1732573132.38957\n"];
+"base_link" -> "Front_Right_steering_link"[label=" Broadcaster: default_authority\nAverage rate: 10.196\nBuffer length: 5.1\nMost recent transform: 1732573137.489683\nOldest transform: 1732573132.38957\n"];
+"Front_Right_steering_link" -> "Front_Right_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 10.196\nBuffer length: 5.1\nMost recent transform: 1732573137.489683\nOldest transform: 1732573132.38957\n"];
+"base_link" -> "Rear_Left_link"[label=" Broadcaster: default_authority\nAverage rate: 10.196\nBuffer length: 5.1\nMost recent transform: 1732573137.489683\nOldest transform: 1732573132.38957\n"];
+"base_link" -> "Rear_Right_link"[label=" Broadcaster: default_authority\nAverage rate: 10.196\nBuffer length: 5.1\nMost recent transform: 1732573137.489683\nOldest transform: 1732573132.38957\n"];
+"base_link" -> "base_footprint"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "velodyne"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1732573137.5037286"[ shape=plaintext ] ;
+}->"base_link";
+}

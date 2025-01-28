@@ -1,0 +1,16 @@
+[0.010s] Invoking command in '/home/ubuntu/AGV_ws/build/robot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/ubuntu/AGV_ws/build/robot_description -- -j8 -l8
+[0.034s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.170s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.235s] [31mCMake Error at /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:53 (message):
+[0.235s]   ament_package_xml() package name 'robot_description' in '/package.xml' does
+[0.235s]   not match current PROJECT_NAME 'my_bot_description'.  You must call
+[0.235s]   project() with the same package name before.
+[0.235s] Call Stack (most recent call first):
+[0.235s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_find_test_dependencies.cmake:31 (ament_package_xml)
+[0.235s]   CMakeLists.txt:36 (ament_lint_auto_find_test_dependencies)
+[0.235s] 
+[0.235s] [0m
+[0.235s] -- Configuring incomplete, errors occurred!
+[0.235s] See also "/home/ubuntu/AGV_ws/build/robot_description/CMakeFiles/CMakeOutput.log".
+[0.239s] gmake: *** [Makefile:226: cmake_check_build_system] Error 1
+[0.241s] Invoked command in '/home/ubuntu/AGV_ws/build/robot_description' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/ubuntu/AGV_ws/build/robot_description -- -j8 -l8

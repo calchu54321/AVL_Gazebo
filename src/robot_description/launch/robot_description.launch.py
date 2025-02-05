@@ -27,6 +27,10 @@ def generate_launch_description():
 
     rviz_config_file = '/home/ubuntu/AGV_ws/src/robot_description/rviz/robot_description.rviz'
 
+    urdf_file = '/home/ubuntu/AGV_ws/src/robot_description/urdf/building_robot.urdf'
+    with open(urdf_file) as infp: 
+        robot_dec = infp.read()
+
     # Create a robot_state_publisher node
     params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
     node_robot_state_publisher = Node(
@@ -34,6 +38,17 @@ def generate_launch_description():
         executable='robot_state_publisher',
         output='screen',
         parameters=[params]
+    )
+
+    # Bridge ROS topics and Gazebo messages for establishing communication
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        parameters=[{
+            'config_file': os.path.join(robot_description_path, 'config', 'bridge.yaml'),
+            'qos_overrides./tf_static.publisher.durability': 'transient_local',
+        }],
+        output='screen'
     )
 
 
@@ -86,5 +101,16 @@ def generate_launch_description():
             name='rviz2',
             output='screen',
             arguments=['-d', rviz_config_file]
-        )
+        ), 
+        Node(
+            package='robot_state_publisher', 
+            executable='robot_state_publisher', 
+            name='robot_state_publisher', 
+            output='screen', 
+            parameters=[{'robot_description': robot_dec}], 
+            arguments=[urdf_file]
+        ),
+        bridge
+            
+
     ]) 

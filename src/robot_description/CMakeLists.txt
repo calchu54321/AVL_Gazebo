@@ -16,11 +16,14 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
-find_package(
-  ament_cmake REQUIRED
-  joint_state_publisher REQUIRED
-  robot_state_publisher REQUIRED
-  rviz)
+# find_package(
+#   ament_cmake REQUIRED
+#   joint_state_publisher REQUIRED
+#   robot_state_publisher REQUIRED
+#   rviz)
+# find dependencies
+find_package(ament_cmake REQUIRED)
+
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -38,17 +41,10 @@ endif()
 
 #Install Directories
 install(
-  DIRECTORY config description launch worlds
+  DIRECTORY config description launch urdf rviz worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
-# install(DIRECTORY urdf/
-#   DESTINATION share/${PROJECT_NAME}/urdf
-#   )
-
-install(DIRECTORY description/
-  DESTINATION share/${PROJECT_NAME}/description
-  )
 
 
 ament_package()

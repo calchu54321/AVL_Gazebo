@@ -14,7 +14,7 @@ def generate_launch_description():
     use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     pkg_share = get_package_share_directory('robot_description')
-    default_model_path = os.path.join(pkg_share, 'description', 'building_robot.urdf.xacro') #xacro
+    default_model_path = os.path.join(pkg_share, 'urdf', 'building_robot.urdf.xacro') #xacro
     robot_description_config = Command(['xacro ', default_model_path, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
 
     # RViz configuration file

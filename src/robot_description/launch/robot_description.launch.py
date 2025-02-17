@@ -26,8 +26,8 @@ def generate_launch_description():
 
 
     rviz_config_file = '/home/ubuntu/AGV_ws/src/robot_description/rviz/robot_description.rviz'
-
     urdf_file = '/home/ubuntu/AGV_ws/src/robot_description/urdf/building_robot.urdf'
+
     with open(urdf_file) as infp: 
         robot_dec = infp.read()
 

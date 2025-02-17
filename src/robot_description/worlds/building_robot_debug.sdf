@@ -60,7 +60,7 @@
             <plugin name='World stats' filename='WorldStats'>
               <ignition-gui>
                 <title>World stats</title>
-                <property type='bool' key='showTitleBar'>false</property>
+                <property type='    bool' key='showTitleBar'>false</property>
                 <property type='bool' key='resizable'>false</property>
                 <property type='double' key='height'>110</property>
                 <property type='double' key='width'>290</property>

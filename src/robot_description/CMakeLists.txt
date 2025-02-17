@@ -41,7 +41,7 @@ endif()
 
 #Install Directories
 install(
-  DIRECTORY config description launch urdf rviz worlds
+  DIRECTORY config description launch rviz worlds
   DESTINATION share/${PROJECT_NAME}
 )
 

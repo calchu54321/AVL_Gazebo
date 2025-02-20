@@ -21,8 +21,8 @@ ack_cont:
     rear_wheels_radius: 0.3
     front_steering: true
     reference_timeout: 2.0
-    rear_wheels_names: ['Rear_Left_wheel_joint', 'Rear_Right_wheel_joint']
-    front_wheels_names: ['Front_Left_steering_joint', 'Front_Right_steering_joint']
+    rear_wheels_names: ['rear_left_wheel_joint', 'rear_right_wheel_joint']
+    front_wheels_names: ['left_wheel_steering_joint', 'right_wheel_steering_joint']
     use_stamped_vel: false
     open_loop: false
     velocity_rolling_window_size: 10

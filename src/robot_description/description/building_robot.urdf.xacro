@@ -251,7 +251,7 @@
   <joint name="test_joint" type="fixed">
     <parent link="base_link"/>
     <child link="test"/>
-    <origin rpy="0 0 0" xyz="0 0 1.0414"/>
+    <origin rpy="0 0 0" xyz="0 0 .43"/>
   </joint> -->
 
 </robot>

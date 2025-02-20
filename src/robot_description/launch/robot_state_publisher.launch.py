@@ -16,7 +16,7 @@ def generate_launch_description():
 
     # Process the URDF file
     pkg_path = os.path.join(get_package_share_directory('robot_description'))
-    xacro_file = os.path.join(pkg_path,'description','building_robot.urdf.xacro')
+    xacro_file = os.path.join(pkg_path,'description','new_car_master.urdf.xacro')
     rviz_config_file = os.path.join(pkg_path, 'rviz/robot_description.rviz')
 
     # Define node parameters
@@ -27,6 +27,7 @@ def generate_launch_description():
         parameters=[{'robot_description': Command(['xacro', ' ', LaunchConfiguration('model')])}]
     )
 
+    #fakes joint-states to test urdf
     joint_state_publisher_node = launch_ros.actions.Node(
         package='joint_state_publisher',
         executable='joint_state_publisher',
@@ -48,16 +49,8 @@ def generate_launch_description():
                                             description='Absolute path to robot urdf file'),
         launch.actions.DeclareLaunchArgument(name='rvizconfig', default_value=rviz_config_file,
                                             description='Absolute path to rviz config file'),    
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='false',
-            description='Use sim time if true'),
-        DeclareLaunchArgument(
-            'use_ros2_control',
-            default_value='true',
-            description='Use ros2_control if true'),
 
         robot_state_publisher,
-        joint_state_publisher_node,
+        #joint_state_publisher_node,
         rviz_node,
     ])

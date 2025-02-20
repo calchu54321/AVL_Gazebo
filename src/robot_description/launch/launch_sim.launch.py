@@ -12,6 +12,7 @@ from launch.actions import ExecuteProcess
 def generate_launch_description():
     package_name = 'robot_description' 
     ros_gz_sim = get_package_share_directory('ros_gz_sim') 
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
     #share directory to read stl file
     os.environ['GZ_SIM_RESOURCE_PATH'] = os.path.join('/home/ubuntu/AGV_ws/src')
@@ -57,8 +58,7 @@ def generate_launch_description():
         package='ros_gz_sim', 
         executable='create',
         output='screen',
-        arguments=['-topic', 'robot_description', '-name', 'car', '-allow_renaming', 'true',
-                   '-x', '0.0', '-y', '0.0', '-z', '0.323'], 
+        arguments=['-topic', 'robot_description', '-name', 'car', '-allow_renaming', 'true'], 
     ) 
 
     joint_state_broadcaster_spawner = Node(
@@ -80,10 +80,29 @@ def generate_launch_description():
         executable='teleop_twist_keyboard',
         name='teleop_twist_keyboard',
         output='screen',
-        remappings=[('/keyboard/cmd_vel', '/ack_cont/reference_unstamped')] #remap topic
+        remappings=[('keyboard/cmd_vel', '/ack_cont/reference_unstamped')] #remap topic
+    )
+
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
+        output='screen'
+    )
+
+    relay_tf = Node(
+    package='topic_tools',
+    executable='relay',
+    arguments=['/ack_cont/tf_odometry', '/tf'],
+    output='screen'
     )
 
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'use_sim_time',
+            default_value=use_sim_time,
+            description='If true, use simulated clock'),        
+        bridge,
         rsp,
         gazebo_server, 
         gazebo_client,
@@ -96,4 +115,5 @@ def generate_launch_description():
         robot_ackermann_controller_spawner,
         gz_spawn_entity,
         teleop_twist_keyboard,
+        relay_tf
     ]) 

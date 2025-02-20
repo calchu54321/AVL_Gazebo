@@ -1,4 +1,4 @@
-#WORKING
+#WORKING (just displays rviz)
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -13,8 +13,12 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     use_ros2_control = LaunchConfiguration('use_ros2_control')
 
+    #share directory to read stl file
+    os.environ['GZ_SIM_RESOURCE_PATH'] = os.path.join('/home/ubuntu/AGV_ws/src')
+
+
     pkg_share = get_package_share_directory('robot_description')
-    default_model_path = os.path.join(pkg_share, 'urdf', 'building_robot.urdf.xacro') #xacro
+    default_model_path = os.path.join(pkg_share, 'description', 'new_car.xacro') #xacro
     robot_description_config = Command(['xacro ', default_model_path, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
 
     # RViz configuration file

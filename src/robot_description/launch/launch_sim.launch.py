@@ -17,6 +17,7 @@ def generate_launch_description():
     #share directory to read stl file
     os.environ['GZ_SIM_RESOURCE_PATH'] = os.path.join('/home/ubuntu/AGV_ws/src')
 
+    #check robot_state_publisher.launch.py to modify urdf/xacro
     rsp = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory(package_name),'launch','robot_state_publisher.launch.py'
@@ -90,6 +91,7 @@ def generate_launch_description():
         output='screen'
     )
 
+    #relay the ackermann steering odom to rviz odom
     relay_tf = Node(
     package='topic_tools',
     executable='relay',

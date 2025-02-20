@@ -21,11 +21,7 @@ def generate_launch_description():
     default_model_path = os.path.join(pkg_share, 'description', 'new_car.xacro') #xacro
     robot_description_config = Command(['xacro ', default_model_path, ' use_ros2_control:=', use_ros2_control, ' sim_mode:=', use_sim_time])
 
-    # RViz configuration file
-    # rviz_config_file = PathJoinSubstitution(
-    # [FindPackageShare("robot_description"), "rviz", "robot_description.rviz"]
-    # )
-    rviz_config_file = '/home/ubuntu/AGV_ws/src/robot_description/rviz/robot_description.rviz'
+    rviz_config_file = '/home/ubuntu/AGV_ws/src/robot_description/rviz/urdf_debug.rviz'
     
     # Create a robot_state_publisher node
     params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}

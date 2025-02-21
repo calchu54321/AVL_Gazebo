@@ -141,7 +141,7 @@ def main():
 
             # Create the Twist message to publish
             twist = geometry_msgs.msg.Twist()
-            twist.linear.x = linear_velocity*.3
+            twist.linear.x = linear_velocity*.4
             twist.angular.z = turn_velocity*.3
 
             # Publish the twist message

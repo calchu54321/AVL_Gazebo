@@ -45,13 +45,13 @@
         </visual>
 
         <collision>
-            <origin xyz="0 -0.01 0" rpy="0 0 0" />
+            <!-- <origin xyz="0 -0.01 0" rpy="0 0 0" />
                 <geometry>
                     <mesh filename="package://robot_description/description/meshes/new_car_chassis.stl" scale="0.58 0.58 0.58"/>
-                </geometry>
+                </geometry> -->
         </collision>
         <!-- make box slightly smaller than actual to prevent accidental self collision y=0.92-->
-        <xacro:inertia_box mass="113.4" x="1.65" y="0.87" z="1.13"> 
+        <xacro:inertia_box mass="150" x="1.65" y="0.92" z="1.13"> 
             <origin rpy="0 -0.01 0" xyz="0 0 0"/>
         </xacro:inertia_box>
     </link>
@@ -129,7 +129,7 @@
         <axis xyz="0 1 0"/>
         <dynamics damping="0.2"/>
         <!-- effort = torque (N/m) Lower/upper = steering angle rad-->
-        <limit effort="500.0" lower="-0.785" upper="0.785" velocity="30"/>
+        <limit effort="100.0" lower="-0.785" upper="0.785" velocity="30"/>
     </joint>
 
     <!-- right steer Link -->
@@ -147,7 +147,7 @@
         <axis xyz="0 1 0"/>
         <dynamics damping="0.2"/>
         <!-- effort = torque (N/m) Lower/upper = steering angle rad-->
-        <limit effort="500.0" lower="-0.785" upper="0.785" velocity="30"/>
+        <limit effort="100.0" lower="-0.785" upper="0.785" velocity="30"/>
     </joint>
 
     <!-- front left wheel Link -->

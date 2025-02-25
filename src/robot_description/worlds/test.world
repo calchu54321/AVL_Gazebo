@@ -49,6 +49,15 @@
             <property key='showTitleBar' type='bool'>false</property>
           </ignition-gui>
         </plugin>
+        <plugin name='Interactive view control' filename='InteractiveViewControl'>
+          <ignition-gui>
+            <property key='resizable' type='bool'>false</property>
+            <property key='width' type='double'>5</property>
+            <property key='height' type='double'>5</property>
+            <property key='state' type='string'>floating</property>
+            <property key='showTitleBar' type='bool'>false</property>
+          </ignition-gui>
+        </plugin>
         <plugin name='Scene Manager' filename='GzSceneManager'>
           <ignition-gui>
             <property key='resizable' type='bool'>false</property>
@@ -68,7 +77,7 @@
           <property type='string' key='state'>docked</property>
         </ignition-gui>
       </plugin>
-      <plugin name='Visualize Lidar' filename='VisualizeLidar'/>
+      <!-- <plugin name='Visualize Lidar' filename='VisualizeLidar'/> -->
     </gui>
     <model name='ground_plane'>
       <static>true</static>

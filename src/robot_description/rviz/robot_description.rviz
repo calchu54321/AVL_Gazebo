@@ -9,9 +9,9 @@ Panels:
         - /TF1
         - /PointCloud21
         - /PointCloud22
-        - /PointCloud22/Status1
+        - /Image1
       Splitter Ratio: 0.5
-    Tree Height: 1211
+    Tree Height: 1105
 Visualization Manager:
   Class: ""
   Displays:
@@ -233,6 +233,20 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /camera/image
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -277,10 +291,12 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1615
+  Height: 1778
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000001f7000005b3fc0200000001fb000000100044006900730070006c006100790073010000006e000005b30000018200ffffff000006ae000005b300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  Width: 2225
-  X: 1328
-  Y: 291
+  Image:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000001f700000656fc0200000002fb000000100044006900730070006c006100790073010000006e000005490000018200fffffffb0000000a0049006d00610067006501000005c3000001010000004a00ffffff000007160000065600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Width: 2329
+  X: 1224
+  Y: 128

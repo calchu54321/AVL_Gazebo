@@ -12,22 +12,25 @@
 
     <xacro:include filename="inertia_macros.xacro"/>
 
-  <!-- Colors -->
-  <material name="White">
-    <color rgba="1.0 1.0 1.0 1.0"/>
-  </material>
-  <material name="Blue">
-      <color rgba="0.0 0.0 1.0 1.0"/>
-  </material>
-  <material name="Gray">
-    <color rgba="0.5 0.5 0.5 1.0"/>
-  </material>
-  <material name="Black">
-      <color rgba="0.1 0.1 0.1 1"/>
-  </material>
-  <material name="Cyan">
-    <color rgba="0 1.0 1.0 1.0"/>
-  </material>
+    <!-- Colors -->
+    <material name="White">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+    <material name="Blue">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+    </material>
+    <material name="Gray">
+        <color rgba="0.5 0.5 0.5 1.0"/>
+    </material>
+    <material name="Black">
+        <color rgba="0.1 0.1 0.1 1"/>
+    </material>
+    <material name="Cyan">
+        <color rgba="0 1.0 1.0 1.0"/>
+    </material>
+    <material name="Red">
+        <color rgba="1 0 0 1.0"/>
+    </material>
 
 
     <link name="base_link" />
@@ -201,23 +204,30 @@
         <axis xyz="0 0 1" />
         <dynamics damping="0.2" />
     </joint>
-        <!-- Lidar -->
-    <link name="velodyne">
+    <!-- Lidar -->
+    <!-- <link name="velodyne">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <cylinder radius=".0762" length=".0762"/>
             </geometry>
-            <material name="Cyan">
-                <color rgba="0 1.0 1.0 1.0"/>
-            </material>
+            <material name="Cyan"/>
+            <collision>
+                <geometry>
+                    <cylinder radius=".0762" length=".0762"/>
+                </geometry>
+            </collision>
+        <xacro:inertia_cylinder mass="2" length=".0762" radius=".0762"> 
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertia_cylinder>
         </visual>
+
     </link>
 
     <joint name="velodyne_joint" type="fixed">
         <parent link="chassis"/>
         <child link="velodyne"/>
         <origin xyz="0 0 1.0414" rpy="0 0 0"/>
-    </joint>
+    </joint> -->
 
 </robot>

@@ -28,7 +28,8 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory('robot_description'),
         'worlds',
-        'empty_world.world'
+        'test.world'
+        # 'empty_world.world'
     )
 
     robot_controllers = PathJoinSubstitution(
@@ -75,7 +76,6 @@ def generate_launch_description():
         # condition=UnlessCondition(remap_odometry_tf),
     )
 
-
     teleop_twist_keyboard = Node(
         package ='teleop_twist_keyboard',
         executable='teleop_twist_keyboard',
@@ -84,11 +84,15 @@ def generate_launch_description():
         remappings=[('keyboard/cmd_vel', '/ack_cont/reference_unstamped')] #remap topic
     )
 
-    bridge = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
-        output='screen'
+    # Launch the Gazebo-ROS bridge
+    bridge_params = os.path.join(get_package_share_directory(package_name),'config','gz_bridge.yaml')
+    ros_gz_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=[
+            '--ros-args',
+            '-p',
+            f'config_file:={bridge_params}',]
     )
 
     #relay the ackermann steering odom to rviz odom
@@ -104,7 +108,6 @@ def generate_launch_description():
             'use_sim_time',
             default_value=use_sim_time,
             description='If true, use simulated clock'),        
-        bridge,
         rsp,
         gazebo_server, 
         gazebo_client,
@@ -117,5 +120,6 @@ def generate_launch_description():
         robot_ackermann_controller_spawner,
         gz_spawn_entity,
         teleop_twist_keyboard,
-        relay_tf
+        relay_tf,
+        ros_gz_bridge
     ]) 

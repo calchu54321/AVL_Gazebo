@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
   <world name="default">
+    <!-- must need this for all sensors to work-->
+    <plugin name='ignition::gazebo::systems::Sensors' filename='ignition-gazebo-sensors-system'>
+        <render_engine>ogre2</render_engine>
+    </plugin>
     <plugin
       filename="gz-sim-physics-system"
       name="gz::sim::systems::Physics">
@@ -21,6 +25,10 @@
     <plugin
       filename="gz-sim-imu-system"
       name="gz::sim::systems::Imu">
+    </plugin>
+    <plugin 
+        filename="ignition-gazebo-contact-system"
+        name="ignition::gazebo::systems::Contact">
     </plugin>
 
     <include>

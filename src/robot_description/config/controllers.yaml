@@ -31,7 +31,7 @@ ack_cont:
     enable_odom_tf: true
     twist_covariance_diagonal: [0.0, 7.0, 14.0, 21.0, 28.0, 35.0]
     pose_covariance_diagonal: [0.0, 7.0, 14.0, 21.0, 28.0, 35.0]
-    position_feedback: false
+    position_feedback: true
 
 bic_cont:
   ros__parameters:

@@ -9,6 +9,14 @@
         <mu1 value="0.5"/>
         <mu2 value="0.5"/>
     </gazebo>
+    <gazebo reference="imu_link">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>1</always_on>
+            <update_rate>1</update_rate>
+            <visualize>true</visualize>
+            <topic>imu</topic>
+        </sensor>
+    </gazebo>
     <!-- <gazebo>
         <plugin filename="ignition-gazebo-ackermann-steering-system"  name=
         "ignition::gazebo::systems::AckermannSteering"> 

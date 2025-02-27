@@ -204,30 +204,20 @@
         <axis xyz="0 0 1" />
         <dynamics damping="0.2" />
     </joint>
-    <!-- Lidar -->
-    <!-- <link name="velodyne">
+
+    <!-- IMU -->
+    <joint name="imu_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="chassis" />
+        <child link="imu_link" />
+    </joint>
+    <link name="imu_link">
+        <pose>0 0 0 0 0 0</pose>  <!-- Adjust height based on your vehicle -->
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <cylinder radius=".0762" length=".0762"/>
+                <box size ="0.05 0.05 0.01"/>
             </geometry>
-            <material name="Cyan"/>
-            <collision>
-                <geometry>
-                    <cylinder radius=".0762" length=".0762"/>
-                </geometry>
-            </collision>
-        <xacro:inertia_cylinder mass="2" length=".0762" radius=".0762"> 
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertia_cylinder>
+            <material name ="White"/>
         </visual>
-
     </link>
-
-    <joint name="velodyne_joint" type="fixed">
-        <parent link="chassis"/>
-        <child link="velodyne"/>
-        <origin xyz="0 0 1.0414" rpy="0 0 0"/>
-    </joint> -->
-
 </robot>

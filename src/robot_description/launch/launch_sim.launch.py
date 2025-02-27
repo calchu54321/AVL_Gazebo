@@ -29,7 +29,7 @@ def generate_launch_description():
         get_package_share_directory('robot_description'),
         'worlds',
         'test.world'
-        # 'empty_world.world'
+        # 'empty.world'
     )
 
     robot_controllers = PathJoinSubstitution(

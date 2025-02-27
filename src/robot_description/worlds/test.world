@@ -11,6 +11,9 @@
         filename="ignition-gazebo-physics-system"
         name="ignition::gazebo::systems::Physics">
     </plugin>
+    <plugin filename="ignition-gazebo-imu-system"
+            name="ignition::gazebo::systems::Imu">
+    </plugin>
     <plugin
         filename="ignition-gazebo-user-commands-system"
         name="ignition::gazebo::systems::UserCommands">
@@ -129,13 +132,13 @@
       <self_collide>false</self_collide>
     </model>
     <model name="simple_wall">
-        <static>true</static> <!-- Makes the wall non-movable -->
-        <pose>3 2 0 0 0 0</pose> <!-- x, y, z position and roll, pitch, yaw orientation -->
+        <static>true</static>
+        <pose>3 2 0 0 0 0</pose>
         <link name="wall_link">
           <collision name="wall_collision">
             <geometry>
               <box>
-                <size>5 0.2 2.5</size> <!-- Width, Depth, Height -->
+                <size>5 0.2 2.5</size> 
               </box>
             </geometry>
             <surface>
@@ -148,11 +151,11 @@
           <visual name="wall_visual">
             <geometry>
               <box>
-                <size>5 0.2 2.5</size> <!-- Width, Depth, Height -->
+                <size>5 0.2 2.5</size> 
               </box>
             </geometry>
             <material>
-              <ambient>0.7 0.7 0.7 1</ambient> <!-- Gray color -->
+              <ambient>0.7 0.7 0.7 1</ambient> 
               <diffuse>0.7 0.7 0.7 1</diffuse>
               <specular>0.1 0.1 0.1 1</specular>
             </material>

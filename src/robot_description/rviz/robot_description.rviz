@@ -79,6 +79,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         laser_frame:
           Alpha: 1
           Show Axes: false
@@ -127,6 +132,8 @@ Visualization Manager:
           Value: true
         front_right_wheel:
           Value: true
+        imu_link:
+          Value: true
         laser_frame:
           Value: true
         left_wheel_steering:
@@ -151,6 +158,8 @@ Visualization Manager:
               camera_link:
                 camera_link_optical:
                   {}
+              imu_link:
+                {}
               laser_frame:
                 {}
               left_wheel_steering:

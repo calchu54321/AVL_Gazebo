@@ -1,3 +1,17 @@
+# #gz topic Keyboard inputs
+# - ros_topic_name: "/keyboard/keypress"
+#   gz_topic_name: "/keyboard/keypress"
+#   ros_type_name: "std_msgs/msg/Int32"
+#   gz_type_name: "gz.msgs.Int32"
+#   direction: ROS_TO_GZ
+  
+#   #gz topic Keyboard TeleopTwist
+# - ros_topic_name: "/cmd_vel"
+#   gz_topic_name: "/model/car/cmd_vel"
+#   ros_type_name: "geometry_msgs/msg/Twist"
+#   gz_type_name: "gz.msgs.Twist"
+#   direction: ROS_TO_GZ
+
 # gz topic published by the Simulator core
 - ros_topic_name: "clock"
   gz_topic_name: "clock"
@@ -12,14 +26,14 @@
   gz_type_name: "gz.msgs.Model"
   direction: GZ_TO_ROS
 
-# # gz topic published by DiffDrive plugin
+# # gz topic published by Ackermann plugin
 # - ros_topic_name: "odom"
 #   gz_topic_name: "odom"
 #   ros_type_name: "nav_msgs/msg/Odometry"
 #   gz_type_name: "gz.msgs.Odometry"
 #   direction: GZ_TO_ROS
 
-# # gz topic published by DiffDrive plugin
+# # gz topic published by Ackermann plugin
 # - ros_topic_name: "tf"
 #   gz_topic_name: "tf"
 #   ros_type_name: "tf2_msgs/msg/TFMessage"
@@ -69,8 +83,8 @@
   direction: GZ_TO_ROS
 
   #gz topic published by Sensors plugin (IMU)
-- ros_topic_name: "imu"
-  gz_topic_name: "imu"
+- ros_topic_name: "imu/data"
+  gz_topic_name: "imu/data"
   ros_type_name: "sensor_msgs/msg/Imu"
   gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS

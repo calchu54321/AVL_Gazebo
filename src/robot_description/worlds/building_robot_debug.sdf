@@ -783,6 +783,9 @@
             </joint>
             <plugin name='ignition::gazebo::systems::AckermannSteering' filename='ignition-gazebo-ackermann-steering-system'>
                 <topic>/cmd_vel</topic>
+                <!-- https://gazebosim.org/api/gazebo/6/classignition_1_1gazebo_1_1systems_1_1AckermannSteering.html 
+                for more info.
+                by default there's an odom and tf topic being published-->
                 <left_joint>front_left_wheel_joint</left_joint>
                 <left_joint>rear_left_wheel_joint</left_joint>
                 <right_joint>front_right_wheel_joint</right_joint>

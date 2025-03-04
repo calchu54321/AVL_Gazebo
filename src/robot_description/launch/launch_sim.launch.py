@@ -40,8 +40,6 @@ def generate_launch_description():
         ]
     )
 
-    remap_odometry_tf = LaunchConfiguration("remap_odometry_tf")
-
     gazebo_server = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(ros_gz_sim, 'launch', 'gz_sim.launch.py')
@@ -73,7 +71,6 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner",
         arguments=["ack_cont", "--param-file", robot_controllers],
-        # condition=UnlessCondition(remap_odometry_tf),
     )
 
     teleop_twist_keyboard = Node(
@@ -103,11 +100,19 @@ def generate_launch_description():
     output='screen'
     )
 
+    #Extended Kalman Filter (EKF) reduce drift
+    EKF_params = os.path.join(get_package_share_directory(package_name),'config','ekf.yaml')
+    EKF = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[{"use_sim_time": True}, EKF_params]
+    )
+
     return LaunchDescription([
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value=use_sim_time,
-            description='If true, use simulated clock'),        
+        DeclareLaunchArgument(name='use_sim_time', default_value='True',
+                                            description='Flag to enable use_sim_time'),       
         rsp,
         gazebo_server, 
         gazebo_client,
@@ -120,6 +125,7 @@ def generate_launch_description():
         robot_ackermann_controller_spawner,
         gz_spawn_entity,
         teleop_twist_keyboard,
-        relay_tf,
-        ros_gz_bridge
+        # relay_tf,
+        ros_gz_bridge,
+        EKF
     ]) 

@@ -1,36 +1,26 @@
-ekf_filter_node:
-  ros__parameters:
-    frequency: 30.0
-    two_d_mode: true  # Assumes flat ground
+ekf_filter_node:  # Instead of ekf_node
+    ros__parameters:
+        use_sim_time: true
+        frequency: 30.0
+        two_d_mode: false
+        publish_acceleration: true
+        publish_tf: true
+        map_frame: map
+        odom_frame: odom
+        base_link_frame: base_link
+        world_frame: odom
 
-    odom_frame: odom
-    base_link_frame: base_link
-    world_frame: odom  # Change to "map" if using localization
+        odom0: /ack_cont/odometry
+        odom0_config: [false, false, false,
+                      false, false, true,  # Enable yaw orientation
+                      true, true, false,
+                      false, false, true,
+                      false, false, false]
 
-    imu0: imu/data
-    imu0_config: [false, false, false,  # X, Y, Z position from IMU (unused)
-                  true, true, true,    # Roll, pitch, yaw (use orientation)
-                  false, false, false,  # Linear velocity
-                  true, true, false,    # Angular velocity (yaw only)
-                  false, false, false]  # Acceleration (optional)
 
-    odom0: odom
-    odom0_config: [true, true, false,  # X, Y position
-                   false, false, true,  # Orientation (yaw only)
-                   true, true, false,  # Linear velocity
-                   false, false, true,  # Angular velocity (yaw only)
-                   false, false, false]  # Acceleration (optional)
-
-    process_noise_covariance: [0.05, 0, 0, 0, 0, 0,
-                               0, 0.05, 0, 0, 0, 0,
-                               0, 0, 0.0001, 0, 0, 0,
-                               0, 0, 0, 0.01, 0, 0,
-                               0, 0, 0, 0, 0.01, 0,
-                               0, 0, 0, 0, 0, 0.01]
-
-    initial_estimate_covariance: [0.1, 0, 0, 0, 0, 0,
-                                  0, 0.1, 0, 0, 0, 0,
-                                  0, 0, 0.1, 0, 0, 0,
-                                  0, 0, 0, 0.1, 0, 0,
-                                  0, 0, 0, 0, 0.1, 0,
-                                  0, 0, 0, 0, 0, 0.1]
+        imu0: imu/data
+        imu0_config: [false, false, false,  # Position (not needed)
+                      true, true, true,     # Orientation (roll, pitch, yaw)
+                      false, false, false,  # Linear velocity
+                      true, true, true,     # Angular velocity
+                      false, false, false]  # Acceleration

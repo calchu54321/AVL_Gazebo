@@ -144,5 +144,5 @@ def generate_launch_description():
         relay_parallel_parking,
         ros_gz_bridge,
         EKF,
-        point_cloud_merge
+        # point_cloud_merge
     ]) 

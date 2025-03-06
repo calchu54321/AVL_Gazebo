@@ -81,7 +81,16 @@
         </ignition-gui>
       </plugin>
       <!-- <plugin name='Visualize Lidar' filename='VisualizeLidar'/> -->
+      <plugin name='Grid config' filename='GridConfig'>
+        <ignition-gui>
+          <title>Grid Config</title>
+        </ignition-gui>
+        <insert>
+          <horizontal_cell_count>50</horizontal_cell_count>
+        </insert>
+      </plugin>
     </gui>
+
     <model name='ground_plane'>
       <static>true</static>
       <link name='link'>
@@ -106,6 +115,7 @@
               <normal>0 0 1</normal>
               <size>100 100</size>
             </plane>
+
           </geometry>
           <material>
             <ambient>0.8 0.8 0.8 1</ambient>
@@ -162,6 +172,22 @@
           </visual>
         </link>
     </model>
+    <include>
+      <uri>
+      https://fuel.gazebosim.org/1.0/OpenRobotics/models/Hatchback red
+      </uri>
+      <name>car1</name>
+      <!-- X: (-)backwards/(+)forwards Y: (-)right/(+)left Z: (-)down/(+)up-->
+      <pose>7 -2 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>
+      https://fuel.gazebosim.org/1.0/OpenRobotics/models/Hatchback red
+      </uri>
+      <name>car2</name>
+      <!-- X: (-)backwards/(+)forwards Y: (-)right/(+)left Z: (-)down/(+)up-->
+      <pose>15 -2 0 0 0 0</pose>
+    </include>
     <!-- <include>
         <uri>
         https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction Cone

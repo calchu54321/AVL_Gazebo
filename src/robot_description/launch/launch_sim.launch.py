@@ -80,6 +80,13 @@ def generate_launch_description():
         output='screen',
         remappings=[('keyboard/cmd_vel', '/ack_cont/reference_unstamped')] #remap topic
     )
+    #relay the twist commands from parallel_parkin.py to ackermann controller
+    relay_parallel_parking = Node(
+    package='topic_tools',
+    executable='relay',
+    arguments=['/cmd_vel', '/ack_cont/reference_unstamped'],
+    output='screen'
+    )
 
     # Launch the Gazebo-ROS bridge
     bridge_params = os.path.join(get_package_share_directory(package_name),'config','gz_bridge.yaml')
@@ -93,6 +100,7 @@ def generate_launch_description():
     )
 
     #relay the ackermann steering odom to rviz odom
+    #not necessary anymore since the EKF filter gives /tf
     relay_tf = Node(
     package='topic_tools',
     executable='relay',
@@ -124,8 +132,9 @@ def generate_launch_description():
         ),
         robot_ackermann_controller_spawner,
         gz_spawn_entity,
-        teleop_twist_keyboard,
+        # teleop_twist_keyboard,
         # relay_tf,
+        relay_parallel_parking,
         ros_gz_bridge,
         EKF
     ]) 

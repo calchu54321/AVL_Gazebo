@@ -54,30 +54,58 @@
   gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
 
-# gz topic published by Sensors plugin (Camera)
-- ros_topic_name: "camera/camera_info"
-  gz_topic_name: "camera/camera_info"
+# gz topic published by Sensors plugin (Front Camera)
+- ros_topic_name: "camera1/camera_info"
+  gz_topic_name: "camera1/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   gz_type_name: "gz.msgs.CameraInfo"
   direction: GZ_TO_ROS
 
-# gz topic published by Sensors plugin (Camera)
-- ros_topic_name: "camera/image"
-  gz_topic_name: "camera/image"
+# gz topic published by Sensors plugin (Front Camera)
+- ros_topic_name: "camera1/image"
+  gz_topic_name: "camera1/image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
   direction: GZ_TO_ROS
 
-# gz topic published by Sensors plugin (Depth Camera)
-- ros_topic_name: "camera/depth_image"
-  gz_topic_name: "camera/depth_image"
+# gz topic published by Sensors plugin (Front Depth Camera)
+- ros_topic_name: "camera1/depth_image"
+  gz_topic_name: "camera1/depth_image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
   direction: GZ_TO_ROS
 
-# gz topic published by Sensors plugin (Depth Camera)
-- ros_topic_name: "camera/points"
-  gz_topic_name: "camera/points"
+# gz topic published by Sensors plugin (Front Depth Camera)
+- ros_topic_name: "camera1/points"
+  gz_topic_name: "camera1/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+  # gz topic published by Sensors plugin (Right Camera)
+- ros_topic_name: "camera2/camera_info"
+  gz_topic_name: "camera2/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (Right Camera)
+- ros_topic_name: "camera2/image"
+  gz_topic_name: "camera2/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (Right Depth Camera)
+- ros_topic_name: "camera2/depth_image"
+  gz_topic_name: "camera2/depth_image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# gz topic published by Sensors plugin (Right Depth Camera)
+- ros_topic_name: "camera2/points"
+  gz_topic_name: "camera2/points"
   ros_type_name: "sensor_msgs/msg/PointCloud2"
   gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS

@@ -176,7 +176,7 @@
       <uri>
       https://fuel.gazebosim.org/1.0/OpenRobotics/models/Hatchback red
       </uri>
-      <name>car1</name>
+      <name>Red_car1</name>
       <!-- X: (-)backwards/(+)forwards Y: (-)right/(+)left Z: (-)down/(+)up-->
       <pose>7 -2 0 0 0 0</pose>
     </include>
@@ -184,7 +184,7 @@
       <uri>
       https://fuel.gazebosim.org/1.0/OpenRobotics/models/Hatchback red
       </uri>
-      <name>car2</name>
+      <name>Red_car2</name>
       <!-- X: (-)backwards/(+)forwards Y: (-)right/(+)left Z: (-)down/(+)up-->
       <pose>15 -2 0 0 0 0</pose>
     </include>

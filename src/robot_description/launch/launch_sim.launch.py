@@ -123,7 +123,7 @@ def generate_launch_description():
             executable='point_cloud_merge', 
             name='point_cloud_merge_node',
             output='screen'
-        ),
+        )
 
     return LaunchDescription([
         DeclareLaunchArgument(name='use_sim_time', default_value='True',
@@ -139,7 +139,7 @@ def generate_launch_description():
         ),
         robot_ackermann_controller_spawner,
         gz_spawn_entity,
-        # teleop_twist_keyboard,
+        teleop_twist_keyboard,
         # relay_tf,
         relay_parallel_parking,
         ros_gz_bridge,

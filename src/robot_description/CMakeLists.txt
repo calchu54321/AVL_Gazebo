@@ -45,11 +45,12 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
-#install Programs
-install(PROGRAMS
-  algorithm/parallel_parking.py
-  DESTINATION lib/${PROJECT_NAME}
-)
+# #install Programs
+# install(PROGRAMS
+#   algorithm/parallel_parking.py
+#   algorithm/point_cloud_merge.py
+#   DESTINATION lib/${PROJECT_NAME}
+# )
 
 
 

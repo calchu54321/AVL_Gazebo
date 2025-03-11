@@ -1,61 +1,69 @@
 #!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
-import sensor_msgs.point_cloud2 as pc2
+import time
 import numpy as np
+import sensor_msgs_py.point_cloud2 as pc2
 
-class VehicleStopNode(Node):
+class ParkingSpotDetection(Node):
     def __init__(self):
-        super().__init__('vehicle_stop_on_open_space')
-        
-        # Initialize subscriber to the PointCloud2 topic
-        self.point_cloud_subscriber = self.create_subscription(
+        super().__init__('parking_spot_detection')
+        self.subscription = self.create_subscription(
             PointCloud2,
-            '/camera2/points', #topic name
+            '/camera2/points',
             self.point_cloud_callback,
-            10
-        )
-
-        # Publisher for controlling the vehicle
-        self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
-
-        # Flag for detecting an open spot
-        self.open_space_detected = False
+            10)
+        self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.moving_forward = True
+        self.forward_start_time = time.time()
 
     def point_cloud_callback(self, msg):
-        # Convert PointCloud2 message to a list of points
-        pc_data = pc2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True)
+        # Ensure at least 3 seconds of movement before processing
+        if self.moving_forward:
+            if time.time() - self.forward_start_time < 3:
+                return
+            self.moving_forward = False
+            self.get_logger().info("Starting parking spot detection...")
         
-        # Convert to a NumPy array for easy manipulation
-        points = np.array(list(pc_data))
+        # Convert PointCloud2 to a list of points
+        points = np.array(list(pc2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True)))
         
-        # Check for an open spot (we'll consider an open spot as points with z > 0)
-        # This is just an example; you may need to adjust the criteria based on your setup
-        open_space_points = points[points[:, 2] > 0.5]  # Adjust threshold value as needed
-
-        # If there's an open space (i.e., points in front of the car)
-        if len(open_space_points) > 0:
-            self.open_space_detected = True
-            self.get_logger().info("Open space detected, stopping the vehicle.")
+        if self.detect_open_space(points):
             self.stop_vehicle()
-        else:
-            self.open_space_detected = False
+
+    def detect_open_space(self, points):
+        """Detects an open parking space from the point cloud data."""
+        if len(points) == 0:
+            return False
+        
+        # Example: Check for a clear space within a specific region in front of the vehicle
+        x_range = (-1.0, 1.0)  # Left and right boundary in meters
+        y_range = (1.5, 3.0)   # Distance ahead to check for an open spot
+        
+        filtered_points = [p for p in points if x_range[0] <= p[0] <= x_range[1] and y_range[0] <= p[1] <= y_range[1]]
+        
+        if len(filtered_points) < 10:  # If few points are detected, assume it's an open space
+            self.get_logger().info("Open parking spot detected! Stopping vehicle.")
+            return True
+        return False
 
     def stop_vehicle(self):
-        # Send a stop command to the vehicle
-        stop_msg = Twist()
-        self.cmd_vel_publisher.publish(stop_msg)
-        
+        """Publishes zero velocity to stop the vehicle."""
+        twist = Twist()
+        twist.linear.x = 0.0
+        twist.angular.z = 0.0
+        self.publisher.publish(twist)
+        self.get_logger().info("Vehicle stopped.")
+        self.destroy_node()
+
+
 def main(args=None):
     rclpy.init(args=args)
-    node = VehicleStopNode()
+    node = ParkingSpotDetection()
     rclpy.spin(node)
-
-    # Clean up and shutdown the node when finished
-    node.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':

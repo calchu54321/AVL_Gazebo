@@ -139,7 +139,7 @@ def generate_launch_description():
         ),
         robot_ackermann_controller_spawner,
         gz_spawn_entity,
-        teleop_twist_keyboard,
+        # teleop_twist_keyboard,
         # relay_tf,
         relay_parallel_parking,
         ros_gz_bridge,

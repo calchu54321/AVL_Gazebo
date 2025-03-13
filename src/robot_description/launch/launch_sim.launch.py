@@ -28,7 +28,9 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory('robot_description'),
         'worlds',
-        'test.world'
+        #uncomment to choose a world
+        # 'test.world' 
+        'test2.world'
         # 'empty.world'
     )
 

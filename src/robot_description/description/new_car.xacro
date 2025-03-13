@@ -42,7 +42,7 @@
         <visual>
         <origin xyz="0 -0.01 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="package://robot_description/description/meshes/new_car_chassis.stl" scale="0.58 0.58 0.58"/>
+                <mesh filename="package://robot_description/description/meshes/new_car_chassis.stl" scale="0.58 0.5 0.58"/>
             </geometry>
             <material name="Blue"/>
         </visual>

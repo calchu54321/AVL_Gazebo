@@ -52,20 +52,29 @@ class ParkingSpotDetection(Node):
         """Detects an open parking space from the point cloud data."""
         if len(points) == 0:
             return False
-        
-        # Example: Check for a clear space within a specific region in front of the vehicle
-        x_range = (-1.0, 1.0)  # Left and right boundary in meters
-        y_range = (0.5, 2.5)   # Distance ahead to check for an open spot
-        
-        # filtered_points = [p for p in points if x_range[0] <= p[0] <= x_range[1] and y_range[0] <= p[1] <= y_range[1]]
-        
 
-        filtered_points = [p for p in points if x_range[0] <= p[0] <= x_range[1]]
-        if len(filtered_points) < 50000:  # If few points are detected, assume it's an open space
+        # Define bounding box limits for an open parking space
+        x_min, x_max = 0.0, 3.0   # Forward distance to check
+        y_min, y_max = 0.0, 5.0    # length of the car
+        z_min, z_max = 0.0, 1.5    # Height range (ground to ~1.5m)
+
+        # Filter points that are inside the defined bounding box
+        filtered_points = [p for p in points if (x_min <= p[0] <= x_max) and 
+                                                    (y_min <= p[1] <= y_max) and 
+                                                    (z_min <= p[2] <= z_max)]
+        
+        num_filtered = len(filtered_points)
+        self.get_logger().info(f"Filtered points in box: {num_filtered}")
+
+        # Define a threshold: If too many points are in the box, it's occupied
+        threshold = 1  # Adjust based on testing
+        if num_filtered < threshold:  
             self.get_logger().info("Open parking spot detected! Stopping vehicle.")
             self.stop_vehicle()
             return True
+
         return False
+
 
     def stop_vehicle(self) -> None:
         """Publishes zero velocity to stop the vehicle."""

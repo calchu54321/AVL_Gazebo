@@ -15,7 +15,7 @@ class ParkingSpotDetection(Node):
             PointCloud2,
             '/camera2/points',
             self.point_cloud_callback,
-            10)
+            20)
         self.subscription
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.moving_forward = True
@@ -24,16 +24,12 @@ class ParkingSpotDetection(Node):
 
     def move_forward(self) -> None: 
         twist = Twist()
-        twist.linear.x = 1.0  # Move forward at 1 m/s
+        twist.linear.x = 0.8  # Move forward at 1 m/s
         twist.angular.z = 0.0
         self.publisher.publish(twist)
 
 
     def point_cloud_callback(self, msg) -> bool:
-        # Ensure at least 1 second of movement before processing
-        # if self.moving_forward and (time.time() - self.forward_start_time < 1):
-        #     return
-
         # Stop moving forward after processing the initial time
         if self.moving_forward:
             self.get_logger().info("Starting parking spot detection...")
@@ -54,9 +50,9 @@ class ParkingSpotDetection(Node):
             return False
 
         # Define bounding box limits for an open parking space
-        x_min, x_max = 0.0, 3.0   # Forward distance to check
-        y_min, y_max = 0.0, 5.0    # length of the car
-        z_min, z_max = 0.0, 1.5    # Height range (ground to ~1.5m)
+        x_min, x_max = 0.0, 2.6   # Forward distance to check
+        y_min, y_max = -1.0, 0.95    # length of the car
+        z_min, z_max = 0, 1.5    # Height range (ground to ~1.5m)
 
         # Filter points that are inside the defined bounding box
         filtered_points = [p for p in points if (x_min <= p[0] <= x_max) and 

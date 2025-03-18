@@ -39,8 +39,8 @@
                 <horizontal_fov>1.52</horizontal_fov>
                 <image>
                     <format>R8G8B8</format>
-                    <width>600</width>
-                    <height>400</height>
+                    <width>320</width>
+                    <height>240</height>
                 </image>
                 <clip>
                     <near>0.05</near>
@@ -81,8 +81,8 @@
                 <horizontal_fov>1.52</horizontal_fov>
                 <image>
                     <format>R8G8B8</format>
-                    <width>600</width>
-                    <height>400</height>
+                    <width>320</width>
+                    <height>240</height>
                 </image>
                 <clip>
                     <near>0.05</near>

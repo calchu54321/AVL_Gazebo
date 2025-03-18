@@ -29,8 +29,9 @@ def generate_launch_description():
         get_package_share_directory('robot_description'),
         'worlds',
         #uncomment to choose a world
-        # 'test.world' 
-        'test2.world'
+        # 'test.world' #2 cars
+        'test2.world' #3 cars, one cone
+        #'depth_camera_callibration.world' #has walls to test the boundaries of depth camera for parking detection
         # 'empty.world'
     )
 

@@ -15,19 +15,21 @@ class ParkingSpotDetection(Node):
             PointCloud2,
             '/camera2/points',
             self.point_cloud_callback,
-            20)
+            1)
         self.subscription
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.moving_forward = True
+        self.slowing_down = False  # Initialize slowing_down attribute
+        self.super_slowing_down = False  # Initialize super_slowing_down attribute
         self.forward_start_time = time.time()
         self.move_forward()
 
-    def move_forward(self) -> None: 
+    def move_forward(self, speed: float = 0.8) -> None: 
+        """Move the vehicle forward at the specified speed."""
         twist = Twist()
-        twist.linear.x = 0.8  # Move forward at 1 m/s
+        twist.linear.x = speed  # Move forward at specified speed
         twist.angular.z = 0.0
         self.publisher.publish(twist)
-
 
     def point_cloud_callback(self, msg) -> bool:
         # Stop moving forward after processing the initial time
@@ -37,9 +39,6 @@ class ParkingSpotDetection(Node):
 
         # Convert PointCloud2 to a list of points
         points = pc2.read_points(msg, field_names=["x", "y", "z"], skip_nans=True)
-        # for p in points: 
-        #     self.get_logger().info(f'points X: {p[0]}'.format(p[0]))
-        #     self.get_logger().info(f'points Y: {p[1]}'.format(p[1]))
         
         if self.detect_open_space(points):
             self.moving_forward = False
@@ -51,7 +50,7 @@ class ParkingSpotDetection(Node):
 
         # Define bounding box limits for an open parking space
         x_min, x_max = 0.0, 2.6   # Forward distance to check
-        y_min, y_max = -1.0, 0.95    # length of the car
+        y_min, y_max = -1.0, 1.3    # Length of the car
         z_min, z_max = 0, 1.5    # Height range (ground to ~1.5m)
 
         # Filter points that are inside the defined bounding box
@@ -62,15 +61,36 @@ class ParkingSpotDetection(Node):
         num_filtered = len(filtered_points)
         self.get_logger().info(f"Filtered points in box: {num_filtered}")
 
-        # Define a threshold: If too many points are in the box, it's occupied
-        threshold = 1  # Adjust based on testing
-        if num_filtered < threshold:  
+        # Define thresholds
+        stop_threshold = 1  # If fewer than 1 point, stop the vehicle
+        slow_threshold = 15000 # If fewer than 10000 points, slow down the vehicle
+        superslow_threshold = 10000 
+
+        # Check if the number of filtered points is below the stop threshold
+        if num_filtered < stop_threshold:  
             self.get_logger().info("Open parking spot detected! Stopping vehicle.")
             self.stop_vehicle()
             return True
 
-        return False
+        # If fewer than slow_threshold points, slow down
+        elif num_filtered < slow_threshold:
+            if not self.slowing_down:
+                self.get_logger().info("Few points detected. Slowing down.")
+                self.slow_down()
 
+        # If fewer than superslow_threshold points, slow down even more
+        elif num_filtered < superslow_threshold:
+            if not self.super_slowing_down:
+                self.get_logger().info("Even fewer points detected. Slowing down more.")
+                self.super_slow_down()
+
+        # If more points are detected (potential obstacle), resume normal speed
+        elif num_filtered >= slow_threshold:
+            if self.slowing_down or self.super_slowing_down:
+                self.get_logger().info("Obstacle detected or space cleared. Resuming normal speed.")
+                self.resume_driving()
+
+        return False
 
     def stop_vehicle(self) -> None:
         """Publishes zero velocity to stop the vehicle."""
@@ -81,6 +101,21 @@ class ParkingSpotDetection(Node):
         self.get_logger().info("Vehicle stopped.")
         self.destroy_node()
 
+    def slow_down(self) -> None:
+        """Slows down the vehicle to prepare for parking."""
+        self.slowing_down = True
+        self.move_forward(speed=0.2)  # Slow down the speed to simulate preparing to park
+
+    def super_slow_down(self) -> None:
+        """Slows down the vehicle even more."""
+        self.super_slowing_down = True
+        self.move_forward(speed=0.1)  # Even slower speed to simulate super slow down
+
+    def resume_driving(self) -> None:
+        """Resumes normal speed."""
+        self.slowing_down = False
+        self.super_slowing_down = False
+        self.move_forward(speed=0.8)  # Resume normal speed
 
 def main(args=None):
     rclpy.init(args=args)

@@ -48,7 +48,6 @@ install(
 #install Programs
 install(PROGRAMS
   algorithm/parallel_parking.py
-  algorithm/point_cloud_merge.py
   algorithm/parking_spot_detection.py
   algorithm/driving_test.py
   algorithm/debug.py

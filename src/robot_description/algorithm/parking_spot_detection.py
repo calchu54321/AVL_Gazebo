@@ -7,6 +7,7 @@ from geometry_msgs.msg import Twist
 import time
 import numpy as np
 import sensor_msgs_py.point_cloud2 as pc2
+from std_msgs.msg import Bool  # Import Bool message type
 
 class ParkingSpotDetection(Node):
     def __init__(self):
@@ -18,6 +19,8 @@ class ParkingSpotDetection(Node):
             1)
         self.subscription
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        # Publisher for notifying that a parking spot is found
+        self.spot_found_publisher = self.create_publisher(Bool, '/parking_spot_found', 10)
         self.moving_forward = True
         self.slowing_down = False  # Initialize slowing_down attribute
         self.super_slowing_down = False  # Initialize super_slowing_down attribute
@@ -99,6 +102,13 @@ class ParkingSpotDetection(Node):
         twist.angular.z = 0.0
         self.publisher.publish(twist)
         self.get_logger().info("Vehicle stopped.")
+
+        # Publish signal to indicate that a parking spot was found
+        self.spot_found_publisher.publish(Bool(data=True))
+        self.get_logger().info("Published parking spot found signal.")
+
+        # Allow time for message to send before shutting down
+        time.sleep(2)
         self.destroy_node()
 
     def slow_down(self) -> None:

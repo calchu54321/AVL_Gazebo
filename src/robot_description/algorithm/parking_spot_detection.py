@@ -5,9 +5,8 @@ from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
 from geometry_msgs.msg import Twist
 import time
-import numpy as np
 import sensor_msgs_py.point_cloud2 as pc2
-from std_msgs.msg import Bool  # Import Bool message type
+from std_msgs.msg import Bool
 
 class ParkingSpotDetection(Node):
     def __init__(self):
@@ -18,44 +17,53 @@ class ParkingSpotDetection(Node):
             self.point_cloud_callback,
             1)
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
-        # Publisher for notifying that a parking spot is found
         self.spot_found_publisher = self.create_publisher(Bool, '/parking_spot_found', 10)
+        
         self.moving_forward = True
-        self.slowing_down = False  # Initialize slowing_down attribute
-        self.super_slowing_down = False  # Initialize super_slowing_down attribute
+        self.slowing_down = False
+        self.super_slowing_down = False
+        self.detecting_tail = False  # New state for tail detection
+        
         self.forward_start_time = time.time()
         self.move_forward()
 
     def move_forward(self, speed: float = 0.8) -> None: 
         """Move the vehicle forward at the specified speed."""
         twist = Twist()
-        twist.linear.x = speed  # Move forward at specified speed
+        twist.linear.x = speed  
         twist.angular.z = 0.0
         self.publisher.publish(twist)
 
-    def point_cloud_callback(self, msg) -> bool:
-        # Stop moving forward after processing the initial time
+    def point_cloud_callback(self, msg) -> None:
+        """Processes incoming point cloud data."""
         if self.moving_forward:
             self.get_logger().info("Starting parking spot detection...")
             self.move_forward()
 
         # Convert PointCloud2 to a list of points
-        points = pc2.read_points(msg, field_names=["x", "y", "z"], skip_nans=True)
+        points = list(pc2.read_points(msg, field_names=["x", "y", "z"], skip_nans=True))
         
-        if self.detect_open_space(points):
-            self.moving_forward = False
+        if not self.detecting_tail:  
+            if self.detect_open_space(points):
+                self.detecting_tail = True  # Switch to tail detection mode
+                self.get_logger().info("Open parking spot found!")
+                self.get_logger().info("Now aligning with bumper.")
+        else:
+            if self.detect_tail_alignment(points):
+                self.get_logger().info("Bumper alignment confirmed. Stopping vehicle.")
+                self.stop_vehicle()
 
     def detect_open_space(self, points) -> bool:
         """Detects an open parking space from the point cloud data."""
-        if len(points) == 0:
+        if not points:
             return False
 
-        # Define bounding box limits for an open parking space
-        x_min, x_max = 0.0, 2.6   # Forward distance to check
-        y_min, y_max = -1.0, 1.3    # Length of the car
-        z_min, z_max = 0, 1.5    # Height range (ground to ~1.5m)
+        # Bounding box for open space detection
+        x_min, x_max = 0.0, 2.6   
+        y_min, y_max = -1.0, 1.3   
+        z_min, z_max = 0, 1.5    
 
-        # Filter points that are inside the defined bounding box
+        # Filter points inside bounding box
         filtered_points = [p for p in points if (x_min <= p[0] <= x_max) and 
                                                     (y_min <= p[1] <= y_max) and 
                                                     (z_min <= p[2] <= z_max)]
@@ -63,46 +71,58 @@ class ParkingSpotDetection(Node):
         num_filtered = len(filtered_points)
         self.get_logger().info(f"Filtered points in box: {num_filtered}")
 
-        # Define thresholds
-        stop_threshold = 1  # If fewer than 1 point, stop the vehicle
-        slow_threshold = 15000 # If fewer than 10000 points, slow down the vehicle
+        # Thresholds
+        stop_threshold = 1  
+        slow_threshold = 15000  
         superslow_threshold = 10000 
 
-        # Check if the number of filtered points is below the stop threshold
         if num_filtered < stop_threshold:  
-            self.get_logger().info("Open parking spot detected! Stopping vehicle.")
-            self.stop_vehicle()
-            return True
+            return True  
 
-        # If fewer than slow_threshold points, slow down
-        elif num_filtered < slow_threshold:
-            if not self.slowing_down:
-                self.get_logger().info("Few points detected. Slowing down.")
-                self.slow_down()
+        elif num_filtered < slow_threshold and not self.slowing_down:
+            self.get_logger().info("Few points detected. Slowing down.")
+            self.slow_down()
 
-        # If fewer than superslow_threshold points, slow down even more
-        elif num_filtered < superslow_threshold:
-            if not self.super_slowing_down:
-                self.get_logger().info("Even fewer points detected. Slowing down more.")
-                self.super_slow_down()
+        elif num_filtered < superslow_threshold and not self.super_slowing_down:
+            self.get_logger().info("Even fewer points detected. Slowing down more.")
+            self.super_slow_down()
 
-        # If more points are detected (potential obstacle), resume normal speed
-        elif num_filtered >= slow_threshold:
-            if self.slowing_down or self.super_slowing_down:
-                self.get_logger().info("Obstacle detected or space cleared. Resuming normal speed.")
-                self.resume_driving()
+        elif num_filtered >= slow_threshold and (self.slowing_down or self.super_slowing_down):
+            self.get_logger().info("Obstacle detected or space cleared. Resuming normal speed.")
+            self.resume_driving()
 
         return False
 
+    def detect_tail_alignment(self, points) -> bool:
+        """Detects the tail of a neighboring vehicle for proper alignment."""
+        if not points:
+            return False
+
+        # **New bounding box for detecting tail alignment**
+        x_min, x_max = 0.0, 1.0   
+        y_min, y_max = -1.0, 0.0   
+        z_min, z_max = 0.0, 1.5    
+
+        # Filter points inside new bounding box
+        filtered_points = [p for p in points if (x_min <= p[0] <= x_max) and 
+                                                    (y_min <= p[1] <= y_max) and 
+                                                    (z_min <= p[2] <= z_max)]
+
+        num_filtered = len(filtered_points)
+        self.get_logger().info(f"Filtered points in tail detection: {num_filtered}")
+
+        tail_threshold = 500  
+
+        return num_filtered > tail_threshold  
+
     def stop_vehicle(self) -> None:
-        """Publishes zero velocity to stop the vehicle."""
+        """Stops the vehicle and publishes a parking spot found signal."""
         twist = Twist()
         twist.linear.x = 0.0
         twist.angular.z = 0.0
         self.publisher.publish(twist)
         self.get_logger().info("Vehicle stopped.")
 
-        # Publish signal to indicate that a parking spot was found
         self.spot_found_publisher.publish(Bool(data=True))
         self.get_logger().info("Published parking spot found signal.")
         self.destroy_node()
@@ -110,18 +130,18 @@ class ParkingSpotDetection(Node):
     def slow_down(self) -> None:
         """Slows down the vehicle to prepare for parking."""
         self.slowing_down = True
-        self.move_forward(speed=0.2)  # Slow down the speed to simulate preparing to park
+        self.move_forward(speed=0.2)  
 
     def super_slow_down(self) -> None:
         """Slows down the vehicle even more."""
         self.super_slowing_down = True
-        self.move_forward(speed=0.1)  # Even slower speed to simulate super slow down
+        self.move_forward(speed=0.1)  
 
     def resume_driving(self) -> None:
         """Resumes normal speed."""
         self.slowing_down = False
         self.super_slowing_down = False
-        self.move_forward(speed=0.8)  # Resume normal speed
+        self.move_forward(speed=0.8)  
 
 def main(args=None):
     rclpy.init(args=args)

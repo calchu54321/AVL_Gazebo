@@ -10,12 +10,14 @@ def generate_launch_description():
             package='robot_description',
             executable='parking_spot_detection.py',
             name='parking_spot_detection',
-            output='screen'
+            output='screen',
+            parameters=[{'use_sim_time': True}]  
         ),
         launch_ros.actions.Node(
             package='robot_description',
             executable='parallel_parking.py',
             name='parallel_parking',
-            output='screen'
+            output='screen',
+            parameters=[{'use_sim_time': True}]  
         ),
     ])

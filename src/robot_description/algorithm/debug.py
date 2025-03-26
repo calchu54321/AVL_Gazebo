@@ -31,11 +31,19 @@ class ParkingSpotDetection(Node):
             self.get_logger().info("No points received.")
             return
 
+        #Parameters for Lineup_car
         # Define bounding box limits
         x_min, x_max = 0.0, 2.6   # Forward distance to check (calibrated to match vehicle width)
         # **(-) is backwards of vehicle, (+) is forwards of vehicle**
-        y_min, y_max = -1.0, 0.95  # Width range (calibrated to match vehicle length) 
+        y_min, y_max = -1.0, 0  # Width range (calibrated to match vehicle length) 
         z_min, z_max = 0.0, 1.5   # Height range
+
+        # #Parameters for Parking_Spot_Detection
+        # # Define bounding box limits
+        # x_min, x_max = 0.0, 2.6   # Forward distance to check (calibrated to match vehicle width)
+        # # **(-) is backwards of vehicle, (+) is forwards of vehicle**
+        # y_min, y_max = -1.0, 0.95  # Width range (calibrated to match vehicle length) 
+        # z_min, z_max = 0.0, 1.5   # Height range
 
         #original bounding box limits (no factor of safety)
         # x_min, x_max = 0.0, 2.6   # Forward distance to check (calibrated to match vehicle width)

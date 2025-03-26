@@ -121,13 +121,6 @@ def generate_launch_description():
         parameters=[{"use_sim_time": True}, EKF_params]
     )
 
-    point_cloud_merge = Node(
-            package='robot_description', 
-            executable='point_cloud_merge', 
-            name='point_cloud_merge_node',
-            output='screen'
-        )
-
     return LaunchDescription([
         DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                             description='Flag to enable use_sim_time'),       

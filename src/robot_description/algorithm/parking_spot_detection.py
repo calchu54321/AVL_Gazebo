@@ -88,7 +88,7 @@ class ParkingSpotDetection(Node):
             self.super_slow_down()
 
         elif num_filtered >= slow_threshold and (self.slowing_down or self.super_slowing_down):
-            self.get_logger().info("Obstacle detected or space cleared. Resuming normal speed.")
+            self.get_logger().info("Obstacle detected. Resuming normal speed.")
             self.resume_driving()
 
         return False

@@ -17,7 +17,6 @@ class ParkingSpotDetection(Node):
             '/camera2/points',
             self.point_cloud_callback,
             1)
-        self.subscription
         self.publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         # Publisher for notifying that a parking spot is found
         self.spot_found_publisher = self.create_publisher(Bool, '/parking_spot_found', 10)
@@ -106,9 +105,6 @@ class ParkingSpotDetection(Node):
         # Publish signal to indicate that a parking spot was found
         self.spot_found_publisher.publish(Bool(data=True))
         self.get_logger().info("Published parking spot found signal.")
-
-        # Allow time for message to send before shutting down
-        time.sleep(2)
         self.destroy_node()
 
     def slow_down(self) -> None:

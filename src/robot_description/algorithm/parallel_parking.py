@@ -24,7 +24,7 @@ class ParallelParking(Node):
     
     def execute_movements(self):
         movements = [
-            ("Backing up and turning right", -0.3, 0.5, 20),  # ("Action name", linear velocity, angular velocity, duration)
+            # ("Backing up and turning right", -0.3, 0.5, 3),  # ("Action name", linear velocity, angular velocity, duration)
             # ("Turning left", 0.2, 0.5, 2),
             # ("Moving backward", -0.5, 0.0, 3),
             # ("Turning right", 0.2, -0.5, 2),
@@ -32,7 +32,21 @@ class ParallelParking(Node):
             # ("Backing up and turning right", -0.3, -0.5, 2),
             # ("Stopping", 0.0, 0.0, 0)
         ]
-        
+        movements.append(("Backing up and turning right", -0.2, 0.2, 3))
+        for _ in range(9):
+            movements.append(("Backing up and turning right", -0.3, 0.5, 1))
+        for _ in range(3):
+            movements.append(("Backing up and turning right", -0.3, 0.2, 1))
+        movements.append(("Stopping", 0.0, 0.0, 0))
+        for _ in range(5):
+            movements.append(("Moving backward", -0.5, 0.0, 1))
+        movements.append(("Stopping", 0.0, 0.0, 0))
+        movements.append(("Backing up and turning left", -0.35, -0.2, 2))
+        for _ in range(10):
+            movements.append(("Backing up and turning left", -0.35, -0.5, 1))
+        movements.append(("Backing up and turning left", -0.35, -0.2, 1))
+        movements.append(("Stopping", 0.0, 0.0, 0))
+
         for action, linear, angular, duration in movements:
             self.get_logger().info(action)
             twist = Twist()

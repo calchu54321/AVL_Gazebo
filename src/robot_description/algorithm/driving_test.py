@@ -17,7 +17,7 @@ class DrivingDirections(Node):
             # ("Turning left", 0.2, 0.5, 2),
             ("Moving backward", -0.5, 0.0, 3),
             # ("Turning right", 0.2, -0.5, 2),
-            ("Backing up and turning left", -0.3, 0.2, 20),
+            ("Backing up and turning left", -0.3, 0.2, 3),
             # ("Backing up and turning right", -0.3, -0.5, 2),
             ("Stopping", 0.0, 0.0, 0)
         ]

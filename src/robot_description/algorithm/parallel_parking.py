@@ -32,19 +32,20 @@ class ParallelParking(Node):
             # ("Backing up and turning right", -0.3, -0.5, 2),
             # ("Stopping", 0.0, 0.0, 0)
         ]
+        movements.append(("Stopping", 0.0, 0.0, 1))      
         movements.append(("Backing up and turning right", -0.2, 0.2, 3))
-        for _ in range(9):
+        for _ in range(5):
             movements.append(("Backing up and turning right", -0.3, 0.5, 1))
-        for _ in range(3):
+        for _ in range(2):
             movements.append(("Backing up and turning right", -0.3, 0.2, 1))
         movements.append(("Stopping", 0.0, 0.0, 0))
-        for _ in range(5):
+        for _ in range(2):
             movements.append(("Moving backward", -0.5, 0.0, 1))
         movements.append(("Stopping", 0.0, 0.0, 0))
-        movements.append(("Backing up and turning left", -0.35, -0.2, 2))
-        for _ in range(10):
-            movements.append(("Backing up and turning left", -0.35, -0.5, 1))
-        movements.append(("Backing up and turning left", -0.35, -0.2, 1))
+        movements.append(("Backing up and turning left", -0.15, -0.3, 2))
+        for _ in range(12):
+            movements.append(("Backing up and turning left", -0.15, -0.4, 1))
+        movements.append(("Backing up and turning left", -0.3, -0.3, 3))
         movements.append(("Stopping", 0.0, 0.0, 0))
 
         for action, linear, angular, duration in movements:

@@ -135,7 +135,7 @@ class ParkingSpotDetection(Node):
     def super_slow_down(self) -> None:
         """Slows down the vehicle even more."""
         self.super_slowing_down = True
-        self.move_forward(speed=0.1)  
+        self.move_forward(speed=0.05)  
 
     def resume_driving(self) -> None:
         """Resumes normal speed."""

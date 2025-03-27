@@ -83,7 +83,7 @@ def generate_launch_description():
         output='screen',
         remappings=[('keyboard/cmd_vel', '/ack_cont/reference_unstamped')] #remap topic
     )
-    #relay the twist commands from parallel_parkin.py to ackermann controller
+    #relay the twist commands from parallel_parking.py to ackermann controller
     relay_parallel_parking = Node(
     package='topic_tools',
     executable='relay',
@@ -140,5 +140,4 @@ def generate_launch_description():
         relay_parallel_parking,
         ros_gz_bridge,
         EKF,
-        # point_cloud_merge
     ]) 

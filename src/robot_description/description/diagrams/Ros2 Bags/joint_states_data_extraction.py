@@ -8,7 +8,7 @@ from rosbag2_py import SequentialReader, StorageOptions, ConverterOptions
 rclpy.init()
 
 # Bag file path
-bag_path = '/home/ubuntu/AGV_ws/src/robot_description/description/diagrams/joint_states'
+bag_path = '/home/ubuntu/AGV_ws/src/robot_description/description/diagrams/ros2_bags/joint_states'
 
 # Set up reader with storage and converter options
 reader = SequentialReader()

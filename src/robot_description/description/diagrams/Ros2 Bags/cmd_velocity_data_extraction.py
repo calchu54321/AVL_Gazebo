@@ -6,7 +6,7 @@ from geometry_msgs.msg import Twist
 from rclpy.serialization import deserialize_message
 
 # === CONFIGURE PATH TO YOUR BAG FILE ===
-bag_path = '/home/ubuntu/AGV_ws/src/robot_description/description/diagrams/cmd_velocity'  # change to your bag path
+bag_path = '/home/ubuntu/AGV_ws/src/robot_description/description/diagrams/ros2_bags/cmd_velocity'  # change to your bag path
 
 # Set up bag reader
 reader = rosbag2_py.SequentialReader()

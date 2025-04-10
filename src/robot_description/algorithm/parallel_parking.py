@@ -47,6 +47,7 @@ class ParallelParking(Node):
             movements.append(("Backing up and turning left", -0.15, -0.4, 1))
         movements.append(("Backing up and turning left", -0.3, -0.3, 3))
         movements.append(("Stopping", 0.0, 0.0, 0))
+        movements.append(("Moving Forward", 0.3, 0.0, 2))
 
         for action, linear, angular, duration in movements:
             self.get_logger().info(action)

@@ -1,4 +1,4 @@
-# 🚗 Autonomous Vehicle Simulation Project
+# 🚗 Autonomous Parallel Parking Simulation Project
 
 > **Note**: This project uses **ROS 2 Humble** and **Gazebo Fortress**.
 
@@ -6,11 +6,9 @@
 
 ## 📦 Required Dependencies
 
-Make sure to install the following **before running the code**:
+Make sure to install the following dependecies **before running the code**:
 
 ```bash
-
-INSTALL THESE ADDITIONAL DEPENDENCIES BEFORE RUNNING CODE
 
 sudo apt install ros-humble-ros-gz-sim
 sudo apt install ros-humble-topic-tools

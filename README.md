@@ -36,8 +36,7 @@ ros2 launch robot_description parallel_parking.launch.py
 Cloning repository to your device: 
 
 ```bash
-#open launch_sim.launch.py code
-#change path to your path
+#change path to your path in launch_sim.launch.py code
 os.environ['GZ_SIM_RESOURCE_PATH'] = os.path.join('/home/ubuntu/AGV_ws/src')
 ```
 
